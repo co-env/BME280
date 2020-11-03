@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/isabologna/Documents/esp/bme280/build/bootloader/esp-idf/cmake_install.cmake")
+  include("C:/Users/isabologna/Documents/poli/projeto_formatura/firmware/bme280/build/bootloader/esp-idf/cmake_install.cmake")
 
 endif()
 
@@ -46,5 +46,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/isabologna/Documents/esp/bme280/build/bootloader/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/isabologna/Documents/poli/projeto_formatura/firmware/bme280/build/bootloader/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/isabologna/Documents/esp/bme280/main
+# Install script for directory: C:/Users/isabologna/Documents/poli/projeto_formatura/firmware/bme280/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
