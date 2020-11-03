@@ -65,3 +65,4 @@ sdkconfig*
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+components/BME280_driver
