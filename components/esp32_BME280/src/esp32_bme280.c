@@ -1,6 +1,17 @@
 #include "esp32_bme280.h"
 
 /**
+ * @brief function for printing data on the monitor
+ */
+static void print_sensor_data(struct bme280_data *comp_data) {
+    #ifdef BME280_FLOAT_ENABLE
+            printf("%0.2f, %0.2f, %0.2f\r\n",comp_data->temperature, comp_data->pressure, comp_data->humidity);
+    #else
+            printf("%ld, %ld, %ld\r\n",comp_data->temperature, comp_data->pressure, comp_data->humidity);
+    #endif
+}
+
+/**
  * @brief function for initializing the BME280 sensor using I2C
  */
 int8_t bme280_sensor_init(struct bme280_dev *dev, bme280_read_fptr_t user_i2c_read, bme280_write_fptr_t user_i2c_write, bme280_delay_us_fptr_t user_delay_us){

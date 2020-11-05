@@ -215,19 +215,7 @@ static void bme280_sensor_task(void *arg) {
         }
         if(erro != BME280_OK) printf("Could not measure :(");
     }
-    
 
-}
-
-/**
- * @brief function for printing data on the monitor
- */
-void print_sensor_data(struct bme280_data *comp_data) {
-    #ifdef BME280_FLOAT_ENABLE
-            printf("%0.2f, %0.2f, %0.2f\r\n",comp_data->temperature, comp_data->pressure, comp_data->humidity);
-    #else
-            printf("%ld, %ld, %ld\r\n",comp_data->temperature, comp_data->pressure, comp_data->humidity);
-    #endif
 }
 
 /**

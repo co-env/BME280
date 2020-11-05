@@ -23,6 +23,3 @@ int8_t bme280_config(struct bme280_dev *dev);
  * Read sensor data and print on the monitor
  */
 int8_t bme280_meas_forcedmode(struct bme280_dev *dev, struct bme280_data *comp_data);
-
-
-void print_sensor_data(struct bme280_data *comp_data);
