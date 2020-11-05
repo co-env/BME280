@@ -53,9 +53,6 @@ dkms.conf
 
 ### ESP-IDF ### 
 
-# Build files
-build/
-
 # Specific SDKCONFIG
 sdkconfig*
 
@@ -66,3 +63,6 @@ sdkconfig*
 !.vscode/extensions.json
 *.code-workspace
 components/BME280_driver
+
+# Build files
+build/
