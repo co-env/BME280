@@ -1,5 +1,7 @@
 #include "esp32_bme280.h"
 
+uint8_t dev_addr = BME280_I2C_ADDR;
+
 /**
  * @brief function for printing data on the monitor
  */
@@ -16,7 +18,6 @@ static void print_sensor_data(struct bme280_data *comp_data) {
  */
 int8_t bme280_sensor_init(struct bme280_dev *dev, bme280_read_fptr_t user_i2c_read, bme280_write_fptr_t user_i2c_write, bme280_delay_us_fptr_t user_delay_us){
     int8_t rslt = BME280_OK;
-    uint8_t dev_addr = BME280_I2C_ADDR;
 
     dev->intf_ptr = &dev_addr;
     dev->intf = BME280_I2C_INTF;

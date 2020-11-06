@@ -40,7 +40,8 @@ static const char *TAG = "BME280_EXAMPLE";
 /*********************
  * * Funções I2C 
  *********************/
-//? revisar
+//todo: alterar endereços dos devices nas funções de i2c
+
 /**
  * @brief i2c master initialization
  
@@ -67,25 +68,29 @@ static esp_err_t i2c_master_init() {
  * @param reg_addr register adress to read from 
  * @param reg_data pointer to save the data read 
  * @param len length of data to be read
- * @param intf_ptr pointer to device address
+ * @param intf_ptr 
+ * 
+ * >init: dev->intf_ptr = &dev_addr;
  * 
  * @return ESP_OK/BME280_OK if reading was successful
  */
-int8_t main_i2c_read(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, void *intf_ptr) {
+int8_t main_i2c_read(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, void *intf_ptr) { // *intf_ptr = dev->intf_ptr
     int8_t rslt = 0; /* Return 0 for Success, non-zero for failure */
 
     if (len == 0) {
         return ESP_OK;
     }
 
+    uint8_t addr = *(uint8_t*)intf_ptr;
+    // uint8_t addr = BME280_I2C_ADDR_SEC;
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
 
     i2c_master_start(cmd);
-    i2c_master_write_byte(cmd, (BME280_I2C_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, (addr << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, reg_addr, ACK_CHECK_EN);
 
     i2c_master_start(cmd);
-    i2c_master_write_byte(cmd, (BME280_I2C_ADDR << 1) | I2C_MASTER_READ, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, (addr << 1) | I2C_MASTER_READ, ACK_CHECK_EN);
     if (len > 1) {
         i2c_master_read(cmd, reg_data, len, ACK_VAL);
     }
@@ -122,7 +127,7 @@ int8_t main_i2c_read(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, void *in
  * @param reg_addr register adress to write to 
  * @param reg_data register data to be written 
  * @param len length of data to be written
- * @param intf_ptr pointer to device address
+ * @param intf_ptr 
  * 
  * @return ESP_OK/BME280_OK if writing was successful
  */

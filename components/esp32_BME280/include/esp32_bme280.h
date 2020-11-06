@@ -5,6 +5,8 @@
 
 #define BME280_I2C_ADDR     BME280_I2C_ADDR_SEC
 
+uint8_t dev_addr;
+
 /**
  * @brief function for initializing the BME280 sensor using I2C
  */
