@@ -103,22 +103,6 @@ int8_t main_i2c_read(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, void *in
     rslt = ret;
     return rslt;
 
-    /*
-     * Data on the bus should be like
-     * |------------+---------------------|
-     * | I2C action | Data                |
-     * |------------+---------------------|
-     * | Start      | -                   |
-     * | Write      | (reg_addr)          |
-    //  * | Stop       | -                   |
-     * | Start      | -                   |
-     * | Read       | (reg_data[0])       |
-     * | Read       | (....)              |
-     * | Read       | (reg_data[len - 1]) |
-     * | Stop       | -                   |
-     * |------------+---------------------|
-     */
-
 }
 
 /**
@@ -134,10 +118,12 @@ int8_t main_i2c_read(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, void *in
 int8_t main_i2c_write(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, void *intf_ptr) {
     int8_t rslt = 0; /* Return 0 for Success, non-zero for failure */
 
+    uint8_t addr = *(uint8_t*)intf_ptr;
+    // uint8_t addr = BME280_I2C_ADDR_SEC;
 
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
-    i2c_master_write_byte(cmd, (BME280_I2C_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, (addr << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, reg_addr, ACK_CHECK_EN);
 
     i2c_master_write(cmd, reg_data, len, ACK_CHECK_EN);
@@ -152,20 +138,6 @@ int8_t main_i2c_write(uint8_t reg_addr, uint8_t *reg_data, uint32_t len, void *i
     
     rslt = ret;
     return rslt;
-
-    /*
-     * Data on the bus should be like
-     * |------------+---------------------|
-     * | I2C action | Data                |
-     * |------------+---------------------|
-     * | Start      | -                   |
-     * | Write      | (reg_addr)          |
-     * | Write      | (reg_data[0])       |
-     * | Write      | (....)              |
-     * | Write      | (reg_data[len - 1]) |
-     * | Stop       | -                   |
-     * |------------+---------------------|
-     */
 
 }
 
@@ -191,12 +163,11 @@ static void bme280_sensor_task(void *arg) {
     ESP_LOGI(TAG, "SGP30 main task initializing...");
     esp_err_t erro = ESP_OK;
 
-    struct bme280_dev dev;
     struct bme280_data comp_data; //TODO: mudar dado para global, usado por outras tasks
 
     //* init bme280
     if (xSemaphoreTake(xSemaphore, portMAX_DELAY ) == pdTRUE ) {
-        erro = bme280_sensor_init(&dev, main_i2c_read, main_i2c_write, main_delay_us);
+        erro = bme280_sensor_init(main_i2c_read, main_i2c_write, main_delay_us);
         xSemaphoreGive(xSemaphore);
     }
 
@@ -204,7 +175,7 @@ static void bme280_sensor_task(void *arg) {
     else printf("Could not init BME280\n");
 
     if (xSemaphoreTake(xSemaphore, portMAX_DELAY ) == pdTRUE ) {
-        erro = bme280_config(&dev);
+        erro = bme280_config();
         xSemaphoreGive(xSemaphore);
     }
 
@@ -215,7 +186,7 @@ static void bme280_sensor_task(void *arg) {
         vTaskDelay(1000 / portTICK_RATE_MS);
 
         if (xSemaphoreTake(xSemaphore, portMAX_DELAY ) == pdTRUE ) {
-            erro = bme280_meas_forcedmode(&dev, &comp_data);
+            erro = bme280_meas_forcedmode(&comp_data);
             xSemaphoreGive(xSemaphore);
         }
         if(erro != BME280_OK) printf("Could not measure :(");
