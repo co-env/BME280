@@ -1,4 +1,4 @@
-[submodule "components/esp32_BME280/BME280_driver"]
-	path = components/esp32_BME280/BME280_driver
+[submodule "BME280_driver"]
+	path = BME280_driver
 	url = https://github.com/co-env/BME280_driver
 
