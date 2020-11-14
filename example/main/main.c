@@ -23,8 +23,8 @@
 #define I2C_NUMBER(num) _I2C_NUMBER(num)
 
 #define I2C_MASTER_NUM      I2C_NUMBER(CONFIG_I2C_MASTER_PORT_NUM) /*!< I2C port number for master dev */
-#define I2C_MASTER_SCL_IO   CONFIG_I2C_MASTER_SCL               /*!< gpio number for I2C master clock */
-#define I2C_MASTER_SDA_IO   CONFIG_I2C_MASTER_SDA               /*!< gpio number for I2C master data  */
+#define I2C_MASTER_SCL_IO   22               /*!< gpio number for I2C master clock */
+#define I2C_MASTER_SDA_IO   21               /*!< gpio number for I2C master data  */
 #define ACK_VAL             0x0                             /*!< I2C ack value */
 #define NACK_VAL            0x1                            /*!< I2C nack value */
 #define ACK_CHECK_EN        0x1                          /*!< I2C master will check ack from slave*/
