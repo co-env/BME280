@@ -70,7 +70,7 @@ int8_t bme280_meas_forcedmode(struct bme280_data *comp_data) {
     /* Wait for the measurement to complete and print data @25Hz */
     dev.delay_us(req_delay, dev.intf_ptr);
     rslt = bme280_get_sensor_data(BME280_ALL, comp_data, &dev);
-    print_sensor_data(comp_data); 
+    // print_sensor_data(comp_data); 
     return rslt;
 }
 

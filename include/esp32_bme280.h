@@ -3,7 +3,8 @@
 
 #include "bme280.h"
 
-#define BME280_I2C_ADDR     BME280_I2C_ADDR_SEC
+// #define BME280_I2C_ADDR     BME280_I2C_ADDR_SEC
+#define BME280_I2C_ADDR     BME280_I2C_ADDR_PRIM
 
 uint8_t dev_addr;
 
